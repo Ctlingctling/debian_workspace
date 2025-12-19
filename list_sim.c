@@ -98,14 +98,37 @@ struct node* del_list_tail(struct node* head)
 struct node* reverse_list(struct node *head)
 {
         if (head       == NULL) return NULL;
-        if (head->next == NULL) return NULL;
+        if (head->next == NULL) return head;
         
-        struct node *curr = (head->next);
-        struct node *pre  = head;
-        while ((curr->next) != NULL) {
-                struct node temp = &curr;
+        struct node *pre  = NULL;
+        struct node *curr = head;
+        struct node *temp;
+        while (curr != NULL) {
+                temp = curr->next;
                 curr->next = pre;
-                curr = temp.next;
+                pre  = curr;
+                curr = temp;
         }
-        return curr;
+        return pre;
+}
+
+struct node* sort_min(struct node *head)
+{
+        if (head       == NULL)
+                return NULL;
+        if (head->next == NULL)
+                return head;
+
+        struct node *cur1 = head;
+        struct node *cur2 = head;
+        struct node *mptr = head;
+        struct node *temp;
+
+        char min = 60;
+        
+        for (;cur1 != NULL; cur1 = cur1->next) {
+                for (cur2 = cur1; cur2 != NULL; cur2 = cur2->next) {
+                        
+                }
+        }
 }

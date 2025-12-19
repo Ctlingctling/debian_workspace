@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct node
-{
+struct node {
         char ele;
         struct node * next;
 };
@@ -12,7 +11,7 @@ int main()
         printf("debug.");
 }
 
-struct node* crt_list (int len)
+struct node* crt_list (int len) 
 {
         /**
          * --Nodes--
@@ -94,4 +93,19 @@ struct node* del_list_tail(struct node* head)
         free(temp->next);
         temp->next = NULL;
         return head;
+}
+
+struct node* reverse_list(struct node *head)
+{
+        if (head       == NULL) return NULL;
+        if (head->next == NULL) return NULL;
+        
+        struct node *curr = (head->next);
+        struct node *pre  = head;
+        while ((curr->next) != NULL) {
+                struct node temp = &curr;
+                curr->next = pre;
+                curr = temp.next;
+        }
+        return curr;
 }

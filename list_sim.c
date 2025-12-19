@@ -112,23 +112,53 @@ struct node* reverse_list(struct node *head)
         return pre;
 }
 
-struct node* sort_min(struct node *head)
+struct node *sort_min(struct node *head)
 {
-        if (head       == NULL)
-                return NULL;
-        if (head->next == NULL)
+        struct node *cur1;
+        struct node *cur2;
+        struct node *mptr;
+        char tmp;
+
+        if (!head || !head->next)
                 return head;
 
-        struct node *cur1 = head;
-        struct node *cur2 = head;
-        struct node *mptr = head;
-        struct node *temp;
+        for (cur1 = head; cur1 != NULL; cur1 = cur1->next) {
+                mptr = cur1;
 
-        char min = 60;
-        
-        for (;cur1 != NULL; cur1 = cur1->next) {
-                for (cur2 = cur1; cur2 != NULL; cur2 = cur2->next) {
-                        
+                for (cur2 = cur1->next; cur2 != NULL; cur2 = cur2->next) {
+                        if (cur2->ele < mptr->ele)
+                                mptr = cur2;
+                }
+
+                if (mptr != cur1) {
+                        tmp = cur1->ele;
+                        cur1->ele = mptr->ele;
+                        mptr->ele = tmp;
                 }
         }
+
+        return head;
+}
+
+struct node *josephes(struct node *head, int n)
+{
+        if (!head || !head->next)
+                return 0;
+
+        int count  = 0;
+        int number = 1;
+        struct node *curr;
+        for (curr = head; curr != NULL; curr = curr->next) {
+                count++;
+        }
+
+        curr->next = head;
+
+        struct node *pre = head;
+        for (curr = head->next; number <= n; curr = curr->next, pre = pre->next, number++) {
+                if (number == n) {
+                        pre->next = curr->next;
+                }
+        }
+        return curr;
 }

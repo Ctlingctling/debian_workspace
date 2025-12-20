@@ -14,9 +14,9 @@ int main()
         for (int i = 0; i < n; i++) {
                 for (int j = i; j < n; j++) {
                         if (strlen(str[i]) > strlen(str[j])) {
-                                tmp = str[i];
-                                str[i] = str[j];
-                                str[j] = tmp;
+                                strcpy(tmp, str[i]);
+                                strcpy(str[i], str[j]);
+                                strcpy(str[j], tmp);
                         }
                 }
         }

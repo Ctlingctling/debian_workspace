@@ -6,37 +6,37 @@ struct node {
         struct node * next;
 };
 
+struct node *crt_list      (int len);
+struct node *del_list_head (struct node *head);
+struct node *del_list_tail (struct node *head);
+struct node *reverse_list  (struct node *head);
+struct node *del_from_tail (struct node *head, int n);
+struct node *josephes      (struct node *head, int n);
+
 int main()
 {
         printf("debug.");
 }
 
-struct node* crt_list (int len) 
+struct node *crt_list (int len) 
 {
-        /**
-         * --Nodes--
-         *  We only need three nodes to creat a list.
-         */
         
-        struct node* head = NULL;
-        struct node* new_node  = NULL;
-        struct node* tail = NULL;
+        struct node *head = NULL;
+        struct node *tail = NULL;
+        struct node *new_node  = NULL;
+        int i;
 
-        /**
-         * --A for loop--
-         * alloc space for each node,notice that the space isnt continuous.
-         * Since we malloc for a new node every time.
-         */
-
-        for (int i = 0; i < len; i++) {
+        for (i = 0; i < len; i++) {
                 /* now malloc a space, size of the node.*/
-                new_node = (struct node*)malloc(sizeof(struct node));
+                new_node = (struct node *) malloc (sizeof(struct node));
+                if (!new_node)
+                        exit(1);
                 /* if theres no input,ignore it*/
-                if (scanf("%c", &(*new_node).ele) != 1)
+                if (scanf(" %c", &new_node->ele) != 1)
                         exit(0);
 
                 /* the new node have to be the last one,pointing nothing.*/
-                new_node -> next = NULL;
+                new_node->next = NULL;
 
                 /**
                  * --the core part of the program.--
@@ -46,47 +46,30 @@ struct node* crt_list (int len)
                         head = new_node;
                         tail = new_node;
                 } else {
-                        tail -> next = new_node;
+                        tail->next = new_node;
                         tail = new_node;
                 }
         }
         return head;
 }
 
-struct node* del_list_head(struct node* head)
+struct node *del_list_head(struct node* head)
 {
         if (head == NULL)
                 return NULL;
-        struct node* new_head = head->next;
+        struct node *new_head = head->next;
         free(head);
         return new_head;
 }
 
-/**
- * struct node* del_list_tail(struct node* head, int len)
- * {
- *        if (head == NULL)
- *                return NULL;
- *        int count = 0;
- *        struct node* pre_node = head;
- *        while (count != len - 1) {
- *                pre_node = pre_node->next;
- *                count++;
- *        }
- *        free(pre_node->next);
- *        pre_node->next = NULL;
- *        return pre_node;
- * }
- */
-
-struct node* del_list_tail(struct node* head)
+struct node *del_list_tail(struct node *head)
 {
         if (head == NULL) return NULL;
         if (head->next == NULL) {
                 free(head);
                 return NULL;
         }
-        struct node* temp = head;
+        struct node *temp = head;
         while (temp->next->next != NULL) {
                 temp = temp->next;
         }
@@ -95,7 +78,7 @@ struct node* del_list_tail(struct node* head)
         return head;
 }
 
-struct node* reverse_list(struct node *head)
+struct node *reverse_list(struct node *head)
 {
         if (head       == NULL) return NULL;
         if (head->next == NULL) return head;
@@ -138,6 +121,41 @@ struct node *sort_min(struct node *head)
         }
 
         return head;
+}
+
+struct node *del_from_tail(struct node *head, int n)
+{
+        struct node *fast = head;
+        struct node *slow = head;
+        struct node *pre_slow = NULL;
+        int i;
+
+        if (!head || n <= 0)
+                return head;
+
+        for (i = 0; i < n; i++) {
+                if (fast == NULL)
+                        return head;
+                fast = fast->next;
+        }
+
+        if (fast == NULL) {
+		struct node *new_head = head->next;
+		free(head);
+		return new_head;
+	}
+
+        while (fast->next != NULL) {
+                fast     = fast->next;
+                pre_slow = slow;
+                slow     = slow->next;
+        }
+        if (pre_slow) {
+                pre_slow->next = slow->next;
+                free(slow);
+        }
+
+        return(head);
 }
 
 struct node *josephes(struct node *head, int n)
@@ -183,3 +201,4 @@ struct node *josephes(struct node *head, int n)
         curr->next = NULL;
         return curr;
 }
+

@@ -1,6 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 int main() {
+        word_reverse();
+}
+
+void word_reverse() {
         string line = "I am learning how to use cpp 12345";
         stringstream ss(line);
 

@@ -10,9 +10,9 @@ int main() {
         while (ss >> token) {
                 word.push_back(token);
         }
-        for (const string& w : word) {
-                cout << w << endl;
+        for (string& w : word) {
+                reverse(w.begin(), w.end());
+                cout << w << ' ';
         }
         return 0;
 }
-

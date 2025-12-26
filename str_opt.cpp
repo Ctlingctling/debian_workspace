@@ -18,5 +18,4 @@ void word_reverse() {
                 reverse(w.begin(), w.end());
                 cout << w << ' ';
         }
-        return 0;
 }
